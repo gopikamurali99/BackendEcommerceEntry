@@ -2,7 +2,7 @@
 import Admin from '../../model/AdminModel/AdminModel.js';
 import { sendEmail } from '../../utils/adminemail.js'
 import crypto from 'crypto'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 
 
 import jwt from 'jsonwebtoken';

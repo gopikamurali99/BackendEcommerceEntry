@@ -1,6 +1,6 @@
 import Customer from "../../model/CustomerRelatedModels/CustomerModel.js"
 import { sendEmail } from '../../utils/email.js';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto'
 
