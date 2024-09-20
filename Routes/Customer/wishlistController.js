@@ -7,7 +7,16 @@ export const addItemToWishlist = async (req, res) => {
     try {
         const { productId } = req.body; // Get product ID from request body
         const userId = req.user.id; // Get the authenticated user's ID
+     
+        const productSam = await Product.findById("66e070a5cbc7374f136ee792");
+        if(!productSam){
+            console.log("product")
+        }
+        else{
+            console.log("cant find")
+        }
 
+         
         // Check if the product exists
         const product = await Product.findById(productId);
         if (!product) {
@@ -28,7 +37,8 @@ export const addItemToWishlist = async (req, res) => {
         // Add new item to the wishlist
         wishlist.items.push(productId);
         await wishlist.save(); // Save the wishlist
-
+        console.log('User ID:', userId);
+        console.log('Product ID:', productId);
         res.status(200).json({ message: 'Item added to wishlist successfully', wishlist });
     } catch (error) {
         res.status(500).json({ message: 'Error adding item to wishlist', error: error.message });

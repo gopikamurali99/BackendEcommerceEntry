@@ -12,7 +12,7 @@ const app = express()
 const port = process.env.PORT
 
 const corsOptions = {
-  origin: 'http://localhost:5173', // Specify the allowed origin
+  origin: '*', // Specify the allowed origin
   credentials: true, // Allow credentials (cookies, authorization headers, etc.)
 };
 
