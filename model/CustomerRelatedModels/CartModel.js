@@ -11,6 +11,18 @@ const cartItemSchema = new mongoose.Schema({
         required: true,
         min: 1,
     },
+    sizes: [
+        {
+          type: String,
+          required: true,
+        },
+      ],
+      colors: [
+        {
+          type: String,
+          
+        },
+      ],
 });
 
 // Main Cart Schema
