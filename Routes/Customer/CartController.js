@@ -30,7 +30,7 @@ export const addItemToCart = async (req, res) => {
             existingItem.quantity += quantity;
         } else {
             // Add new item to the cart with size and color
-            cart.items.push({ product: productId, quantity, sizes, colors });
+            cart.items.push({ product: productId, quantity, sizes});
         }
 
         await cart.save(); // Save the cart
@@ -62,7 +62,7 @@ export const updateCartItem = async (req, res) => {
         const { itemId } = req.params; // Get item ID from URL parameters
         const { quantity } = req.body; // Get new quantity from request body
         const userId = req.user.id; // Get the authenticated user's ID
-        
+
 
         const cart = await Cart.findOne({ user: userId });
         if (!cart) {
