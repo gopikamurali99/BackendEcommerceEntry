@@ -5,7 +5,7 @@ import Product from '../../model/PrductRelatedModels/productModel.js'; // Import
 // Add item to cart
 export const addItemToCart = async (req, res) => {
     try {
-        const { productId, quantity,sizes,colors } = req.body; // Get product ID and quantity from request body
+        const { productId, quantity,sizes} = req.body; // Get product ID and quantity from request body
         const userId = req.user.id; // Get the authenticated user's ID
 
         // Check if the product exists
@@ -21,13 +21,16 @@ export const addItemToCart = async (req, res) => {
         }
 
         // Check if the item already exists in the cart
-        const existingItem = cart.items.find(item => item.product.toString() === productId);
+        const existingItem = cart.items.find(
+            item => item.product.toString() === productId && item.sizes === sizes
+        );
+
         if (existingItem) {
             // Update the quantity if it already exists
             existingItem.quantity += quantity;
         } else {
-            // Add new item to the cart
-            cart.items.push({ product: productId, quantity,sizes,colors });
+            // Add new item to the cart with size and color
+            cart.items.push({ product: productId, quantity, sizes, colors });
         }
 
         await cart.save(); // Save the cart
@@ -59,6 +62,7 @@ export const updateCartItem = async (req, res) => {
         const { itemId } = req.params; // Get item ID from URL parameters
         const { quantity } = req.body; // Get new quantity from request body
         const userId = req.user.id; // Get the authenticated user's ID
+        
 
         const cart = await Cart.findOne({ user: userId });
         if (!cart) {
