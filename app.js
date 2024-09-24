@@ -10,11 +10,22 @@ import cookieParser from 'cookie-parser';
 //import limiter from './middlewares/rateLimitMiddleware.js'
 const app = express()
 const port = process.env.PORT
-
-const corsOptions = {
-  origin: '*', // Specify the allowed origin
-  credentials: true, // Allow credentials (cookies, authorization headers, etc.)
-};
+const allowedOrigins = ['http://localhost:5173', 'https://frontend-ecommerce-entry-zq9x.vercel.app'];
+// CORS middleware
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    // Check if the origin is in the allowed list
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  methods: 'GET,POST,PUT,PATCH,DELETE',
+  credentials: true, // If using cookies or session-based auth
+}));
 
 
 
