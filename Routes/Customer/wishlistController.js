@@ -5,7 +5,7 @@ import Product from '../../model/PrductRelatedModels/productModel.js'; // Import
 // Add item to wishlist
 export const addItemToWishlist = async (req, res) => {
     try {
-        const { productId } = req.body; // Get product ID from request body
+        const { productId,size } = req.body; // Get product ID from request body
         const userId = req.user.id; // Get the authenticated user's ID
      
         const productSam = await Product.findById("66e070a5cbc7374f136ee792");
@@ -30,13 +30,13 @@ export const addItemToWishlist = async (req, res) => {
         }
 
         // Check if the item already exists in the wishlist
-        const existingItem = wishlist.items.find(item => item.product.toString() === productId && item.size === size);
+        const existingItem = wishlist.items.find(item => item.product.toString() === productId && item.sizes === size);
     if (existingItem) {
       return res.status(400).json({ message: 'Item with this size already exists in the wishlist' });
     }
 
         // Add new item to the wishlist
-        wishlist.items.push(productId);
+        wishlist.items.push({ product: productId, sizes: size });
         await wishlist.save(); // Save the wishlist
         
         res.status(200).json({ message: 'Item added to wishlist successfully', wishlist });
@@ -49,7 +49,7 @@ export const addItemToWishlist = async (req, res) => {
 export const viewWishlist = async (req, res) => {
     try {
         const userId = req.user.id; // Get the authenticated user's ID
-        const wishlist = await Wishlist.findOne({ user: userId }).populate('items', 'name price images sizes'); // Populate product details
+        const wishlist = await Wishlist.findOne({ user: userId }).populate('items.product', 'name price images sizes'); // Populate product details
 
         if (!wishlist) {
             return res.status(404).json({ message: 'Wishlist not found' });
