@@ -5,7 +5,7 @@ import Product from '../../model/PrductRelatedModels/productModel.js'; // Import
 // Add item to cart
 export const addItemToCart = async (req, res) => {
     try {
-        const { productId, quantity } = req.body; // Get product ID and quantity from request body
+        const { productId, quantity,sizes,colors } = req.body; // Get product ID and quantity from request body
         const userId = req.user.id; // Get the authenticated user's ID
 
         // Check if the product exists
@@ -27,7 +27,7 @@ export const addItemToCart = async (req, res) => {
             existingItem.quantity += quantity;
         } else {
             // Add new item to the cart
-            cart.items.push({ product: productId, quantity });
+            cart.items.push({ product: productId, quantity,sizes,colors });
         }
 
         await cart.save(); // Save the cart
