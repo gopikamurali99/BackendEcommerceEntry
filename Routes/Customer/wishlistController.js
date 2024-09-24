@@ -30,15 +30,15 @@ export const addItemToWishlist = async (req, res) => {
         }
 
         // Check if the item already exists in the wishlist
-        if (wishlist.items.includes(productId)) {
-            return res.status(400).json({ message: 'Item already exists in the wishlist' });
-        }
+        const existingItem = wishlist.items.find(item => item.product.toString() === productId && item.size === size);
+    if (existingItem) {
+      return res.status(400).json({ message: 'Item with this size already exists in the wishlist' });
+    }
 
         // Add new item to the wishlist
         wishlist.items.push(productId);
         await wishlist.save(); // Save the wishlist
-        console.log('User ID:', userId);
-        console.log('Product ID:', productId);
+        
         res.status(200).json({ message: 'Item added to wishlist successfully', wishlist });
     } catch (error) {
         res.status(500).json({ message: 'Error adding item to wishlist', error: error.message });
@@ -49,7 +49,7 @@ export const addItemToWishlist = async (req, res) => {
 export const viewWishlist = async (req, res) => {
     try {
         const userId = req.user.id; // Get the authenticated user's ID
-        const wishlist = await Wishlist.findOne({ user: userId }).populate('items', 'name price images'); // Populate product details
+        const wishlist = await Wishlist.findOne({ user: userId }).populate('items', 'name price images sizes'); // Populate product details
 
         if (!wishlist) {
             return res.status(404).json({ message: 'Wishlist not found' });
