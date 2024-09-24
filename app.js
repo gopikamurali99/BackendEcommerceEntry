@@ -31,7 +31,6 @@ app.use(cors({
 
 connectionString()  // connecting with mongodb
 
-app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser())
 app.use('/',routes)
