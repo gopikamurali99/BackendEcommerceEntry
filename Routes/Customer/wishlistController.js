@@ -1,19 +1,20 @@
 // controllers/wishlistController.js
+import mongoose from 'mongoose'; 
 import Wishlist from '../../model/CustomerRelatedModels/wishlistModel.js'; // Import your Wishlist model
 import Product from '../../model/PrductRelatedModels/productModel.js'; // Import your Product model
 
 // Add item to wishlist
 export const addItemToWishlist = async (req, res) => {
     try {
-        const { productId,size } = req.body; // Get product ID from request body
+        const { productId,sizes } = req.body; // Get product ID from request body
         const userId = req.user.id; // Get the authenticated user's ID
      
-        const productSam = await Product.findById("66e070a5cbc7374f136ee792");
-        if(!productSam){
-            console.log("product")
+        if (!productId || !sizes) {
+            return res.status(400).json({ message: 'Product ID and sizes are required' });
         }
-        else{
-            console.log("cant find")
+
+        if (!mongoose.Types.ObjectId.isValid(productId)) {
+            return res.status(400).json({ message: 'Invalid Product ID' });
         }
 
          
@@ -22,21 +23,32 @@ export const addItemToWishlist = async (req, res) => {
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
+        else{
+            console.log('product is valid')
+        }
+     
 
         // Find the user's wishlist or create a new one
         let wishlist = await Wishlist.findOne({ user: userId });
         if (!wishlist) {
             wishlist = new Wishlist({ user: userId, items: [] });
         }
+        console.log('Wishlist found:', wishlist);
+        console.log('Product ID:', productId);
+        console.log('Sizes:', sizes);
 
+        if (!Array.isArray(wishlist.items)) {
+            wishlist.items = [];
+        }
         // Check if the item already exists in the wishlist
-        const existingItem = wishlist.items.find(item => item.product.toString() === productId && item.sizes === size);
+        const existingItem = wishlist.items.find(item => item.product && item.product.toString() === productId && item.sizes === sizes);
+
     if (existingItem) {
       return res.status(400).json({ message: 'Item with this size already exists in the wishlist' });
     }
 
         // Add new item to the wishlist
-        wishlist.items.push({ product: productId, sizes: size });
+        wishlist.items.push({ product: productId, sizes: sizes });
         await wishlist.save(); // Save the wishlist
         
         res.status(200).json({ message: 'Item added to wishlist successfully', wishlist });
