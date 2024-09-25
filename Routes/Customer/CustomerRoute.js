@@ -2,10 +2,10 @@ import express from 'express'
 import { signup,signin,verifyEmail,signout } from './CustomerRouteController.js'
 import {addItemToCart,viewCart,updateCartItem,removeItemFromCart,clearCart} from './CartController.js';
 import {addItemToWishlist,viewWishlist,removeItemFromWishlist,clearWishlist} from './wishlistController.js';
-import {createOrder,getOrderById,cancelOrder,getCustomerOrders} from './CustomerOrder.js';
+import {createOrder,getOrderById,cancelOrder,getCustomerOrders,userPaymentDetails} from './CustomerOrder.js';
 import {confirmOrder} from './ConfirmOrder.js';
 import {createShippingAddress,getAllShippingAddresses,getShippingAddressById,updateShippingAddress,deleteShippingAddress} from './ShippingAddress.js';
-import {createPayment,getPaymentById} from './paymentCobtroller.js';
+
 import { CustomerAuthMiddleware } from './customerAuthMiddleware.js';
 import { getAllProducts, getProductById} from '../Admin/AdminProductController.js';
 
@@ -63,10 +63,10 @@ router.put('/address/:addressId',  CustomerAuthMiddleware, updateShippingAddress
 // Route for deleting a shipping address
 router.delete('/address/:addressId', CustomerAuthMiddleware, deleteShippingAddress);
 
+router.post('/payment/:userId', CustomerAuthMiddleware,userPaymentDetails );
 
 // Route for creating a new payment
-router.post('/payment',  CustomerAuthMiddleware, createPayment);
-router.get('/payment/:paymentId',  CustomerAuthMiddleware, getPaymentById);
+
 //Get all product
 /*router.get('/product',  CustomerAuthMiddleware, getAllProducts);
 router.get('/product/:id',  CustomerAuthMiddleware, getProductById);*/

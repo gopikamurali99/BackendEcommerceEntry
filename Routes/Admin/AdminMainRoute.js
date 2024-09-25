@@ -4,7 +4,7 @@ import { authenticate } from '../Admin/AdminauthMiddleware.js';
 import {signup,verifyEmail,login,logout} from '../Admin/adminControllers.js';
 import { viewPendingProducts, approveProduct, rejectProduct, getAllSellers,deleteSeller } from './AdminSellerContollers.js'
 import {getAllCustomers,getCustomerById,deleteCustomer,activateCustomer} from './AdminCustomerController.js';
-import {getAllPayments,getPaymentById,updatePaymentStatus} from '../Customer/paymentCobtroller.js';
+
 import { getAllOrders,updateOrderStatus,deleteOrder} from './AdminOrderController.js';
 import {getAllProducts,getProductById,updateProduct,deleteProduct} from './AdminProductController.js';
 
@@ -60,13 +60,7 @@ router.put('/order/:orderId/status', authenticate,  updateOrderStatus);
 // Route for deleting an order (admin only)
 router.delete('/order/:orderId', authenticate,  deleteOrder);
 // Route for getting all payments (admin only)
-router.get('/payment', authenticate, getAllPayments);
 
-// Route for getting a specific payment by ID
-router.get('/payment/:paymentId', authenticate, getPaymentById);
-
-// Route for updating the status of a payment (admin only)
-router.put('/payment/:paymentId/status', authenticate, updatePaymentStatus);
 
 // Route for admin to get all products
 router.get('/products', authenticate,  getAllProducts);

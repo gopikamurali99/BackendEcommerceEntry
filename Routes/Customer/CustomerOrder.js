@@ -1,8 +1,73 @@
 // controllers/orderController.js
-import Order from '../../model/CustomerRelatedModels/OrderModel.js'; // Import your Order model
-import Cart from '../../model/CustomerRelatedModels/CartModel.js'; // Import your Cart model (if needed)
+import UserPaymentModel from "../../model/CustomerRelatedModels/PaymentModel.js"; // Import your Payment model
+import Order from '../../model/CustomerRelatedModels/OrderModel.js';//order model
+import Stripe from "stripe"; // Import stripe 
+import Product from "../../model/PrductRelatedModels/productModel.js";
+import Cart from "../../model/CustomerRelatedModels/CartModel.js";
+import ShippingAddress from "../../model/CustomerRelatedModels/ShippimgAddress.js";// Import your Cart model (if needed)
 
 // Create a new order
+
+
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
+// Add or update shipping address
+
+export const userPaymentDetails =async (req, res) => {
+    const { amount, items } = req.body;
+    
+    console.log('req.body is',req.body); // Log the request body
+    console.log('secret key is',process.env.STRIPE_SECRET_KEY)
+       const userId = req.params.userId
+    try {
+
+        // Convert amount to paisa (smallest unit)
+        const amountInPaisa = amount * 100;
+
+        // Create a Payment Intent with INR as the currency
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: amountInPaisa,  // Amount in paisa (e.g., 50000 paisa for ₹500)
+            currency: 'inr',  // Set currency to Indian Rupee
+            payment_method_types: ['card'],
+            
+        });
+
+
+        // Calculate total amount based on items (in case you want to verify the total)
+        const calculatedAmount = items.reduce((total, item) => {
+            return total + (item.quantity * item.price);
+        }, 0);
+
+         
+
+        // Save the payment details in the database
+        const payment = new UserPaymentModel({
+            userId: userId,
+            paymentIntentId: paymentIntent.id,
+            amount: amount,
+            currency: "inr",  // Currency set to INR
+            paymentMethod:"card",  // Can be dynamic depending on the user's choice
+            status: paymentIntent.status,
+            transactionId: paymentIntent.id,  // Use the paymentIntent ID as the transaction ID
+            items: items.map(item => ({
+                productId: item.productId,
+                quantity: item.quantity,
+                price: item.price,
+                name: item.name,
+                images: item.images,
+                sizes: item.sizes,
+                totalAmount: item.quantity * item.price,
+            })),
+        
+        
+        });
+
+        await payment.save();
+
+        res.status(200).json({ client_secret: paymentIntent.client_secret });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
 export const createOrder = async (req, res) => {
     try {
         const { items, totalAmount } = req.body; // Get items and total amount from request body
