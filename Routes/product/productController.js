@@ -23,7 +23,23 @@ const productController = {
       res.status(500).json({ message: error.message });
     }
   },
-};
+
+getRelatedProducts: async (req, res) => {
+  try {
+    const { category } = req.params;
+    
+    // Fetch related products based on category, excluding the current product
+    const relatedProducts = await Product.find({ category, _id: { $ne: req.params.id } }).limit(8); // Limit to 4 for example
+    
+    if (relatedProducts.length === 0) {
+      return res.status(404).json({ message: 'No related products found' });
+    }
+    res.json(relatedProducts);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+}
+}
 
 export default productController;
 

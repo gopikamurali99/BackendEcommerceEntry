@@ -64,7 +64,7 @@ export const signin = async (req, res) => {
     secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
     maxAge: 3600000, // Cookie expiration time (1 hour)
 });
-res.json({ token, name: customer.Name });
+res.json({ token, name: customer.Name,userId:customer._id });
 }; 
 
 //logout

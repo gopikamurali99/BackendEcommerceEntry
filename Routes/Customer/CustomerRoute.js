@@ -8,6 +8,7 @@ import {createShippingAddress,getAllShippingAddresses,getShippingAddressById,upd
 
 import { CustomerAuthMiddleware } from './customerAuthMiddleware.js';
 import { getAllProducts, getProductById} from '../Admin/AdminProductController.js';
+import { Checkout, clearcartItem, getcheckoutAddress } from './checkout.js';
 
 const router =express.Router()
 
@@ -63,12 +64,14 @@ router.put('/address/:addressId',  CustomerAuthMiddleware, updateShippingAddress
 // Route for deleting a shipping address
 router.delete('/address/:addressId', CustomerAuthMiddleware, deleteShippingAddress);
 
-router.post('/payment/:userId', CustomerAuthMiddleware,userPaymentDetails );
+//router.post('/payment/:userId', CustomerAuthMiddleware,userPaymentDetails );
 
 // Route for creating a new payment
 
 //Get all product
 /*router.get('/product',  CustomerAuthMiddleware, getAllProducts);
 router.get('/product/:id',  CustomerAuthMiddleware, getProductById);*/
-
+router.post('/checkoutsession',Checkout)
+router.get('/checkoutaddress',getcheckoutAddress)
+router.post('/clearorderitem',clearcartItem)
 export default router;
