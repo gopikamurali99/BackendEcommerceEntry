@@ -72,6 +72,6 @@ router.delete('/address/:addressId', CustomerAuthMiddleware, deleteShippingAddre
 /*router.get('/product',  CustomerAuthMiddleware, getAllProducts);
 router.get('/product/:id',  CustomerAuthMiddleware, getProductById);*/
 router.post('/checkoutsession',Checkout)
-router.get('/checkoutaddress',getcheckoutAddress)
-router.post('/clearorderitem',clearcartItem)
+router.get('/checkoutaddress',CustomerAuthMiddleware,getcheckoutAddress)
+router.post('/clearorderitem',CustomerAuthMiddleware,clearcartItem)
 export default router;
