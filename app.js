@@ -10,7 +10,7 @@ import cookieParser from 'cookie-parser';
 //import limiter from './middlewares/rateLimitMiddleware.js'
 const app = express()
 const port = process.env.PORT
-const allowedOrigins = ['http://localhost:5173', 'https://frontend-ecommerce-entry-zq9x.vercel.app'];
+const allowedOrigins = ['http://localhost:5173', 'https://frontend-ecommerce-entry-zq9x.vercel.app','https://frontend-ecommerce-entry-frmk.vercel.app'];
 // CORS middleware
 app.use(cors({
   origin: function (origin, callback) {
