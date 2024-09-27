@@ -40,8 +40,8 @@ export const Checkout = async (req, res) => {
               },
             line_items: lineItems,
             mode: 'payment',
-            success_url: 'https://frontend-ecommerce-entry-zq9x.vercel.app/paymentsuccess',
-            cancel_url: 'https://frontend-ecommerce-entry-zq9x.vercel.app/paymentCancel',
+            success_url: 'https://frontend-ecommerce-entry-frmk.vercel.app/paymentsuccess',
+            cancel_url: 'https://frontend-ecommerce-entry-frmk.vercel.app/paymentCancel',
         });
         
         
