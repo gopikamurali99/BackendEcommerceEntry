@@ -41,8 +41,8 @@ export const Checkout = async (req, res) => {
               },
             line_items: lineItems,
             mode: 'payment',
-            success_url: 'http://localhost:5173/paymentsuccess',
-            cancel_url: 'http://localhost:5173/paymentCancel',
+            success_url: `${process.env.BASE_URL}/paymentsuccess`,
+            cancel_url: `${process.env.BASE_URL}/paymentCancel`,
         });
         
         
