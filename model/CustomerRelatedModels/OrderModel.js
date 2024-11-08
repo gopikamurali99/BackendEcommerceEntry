@@ -11,7 +11,12 @@ const orderSchema = new mongoose.Schema({
             product: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'Product',
+               
+            },
+            name:{
+                type: String,
                 required: true,
+
             },
             quantity: {
                 type: Number,
@@ -28,20 +33,33 @@ const orderSchema = new mongoose.Schema({
                   required: true,
                 },
               ],
+              images: [
+                {
+                  type: String,
+                  required: true,
+                },
+              ],
         },
     ],
     totalAmount: {
         type: Number,
         required: true,
     },
-    address:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'ShippingAddress',
+    shippingDetails: {
+        name: { type: String, required: true },
+        address: {
+            line1: { type: String },
+            line2: { type: String },
+            city: { type: String},
+            state: { type: String },
+            postalCode: { type: String },
+            country: { type: String },
+        },
+        email: { type: String },
+        phone: { type: String },
+       
     },
-    payment: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Payment',
-    },
+   
     status: {
         type: String,
         enum: ['Pending', 'Processing', 'Completed', 'Cancelled'],

@@ -8,7 +8,7 @@ import {createShippingAddress,getAllShippingAddresses,getShippingAddressById,upd
 
 import { CustomerAuthMiddleware } from './customerAuthMiddleware.js';
 import { getAllProducts, getProductById} from '../Admin/AdminProductController.js';
-import { Checkout, clearcartItem, getcheckoutAddress } from './checkout.js';
+import { Checkout, clearcartItem, getcheckoutAddress, getUserOrders } from './checkout.js';
 
 const router =express.Router()
 
@@ -74,4 +74,6 @@ router.get('/product/:id',  CustomerAuthMiddleware, getProductById);*/
 router.post('/checkoutsession',Checkout)
 router.get('/checkoutaddress',CustomerAuthMiddleware,getcheckoutAddress)
 router.post('/clearorderitem',CustomerAuthMiddleware,clearcartItem)
+router.get('/order',CustomerAuthMiddleware,getUserOrders)
+
 export default router;

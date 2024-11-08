@@ -1,6 +1,7 @@
 // Import the necessary libraries
 import Stripe from "stripe";
 import Cart from "../../model/CustomerRelatedModels/CartModel.js";
+import Order from "../../model/CustomerRelatedModels/OrderModel.js" 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 // Route to create a Stripe Checkout session
 export const Checkout = async (req, res) => {
@@ -69,13 +70,50 @@ export const getcheckoutAddress = async (req, res) => {
   
     try {
       console.log('Fetching session details from Stripe...');
-      const session = await stripe.checkout.sessions.retrieve(sessionId);
-      console.log('Session data from Stripe:', session);  // Ensure this logs the session data
-  
+      const session = await stripe.checkout.sessions.retrieve(sessionId,{
+        expand: ['line_items.data.price.product']
+      });
+      console.log('Session data from Stripe:', session); 
+
+      const customerDetails = session.customer_details;
+      const purchasedItems = session.line_items.data.map(item => ({
+        
+        name: item.description,
+        quantity: item.quantity,
+        images: item.price.product.images,
+        sizes:item.sizes,
+        price: item.amount_subtotal / 100,
+        // Ensure each property exists before using it
+     // Fallback to 0 if price is missing
+        
+      }));
+      console.log("purchased item:",purchasedItems)
+      console.table(purchasedItems);
+
+      const newOrder = await Order.create({
+        customer: req.user.id, 
+        items: purchasedItems,
+        totalAmount: session.amount_total / 100,
+        shippingDetails: {
+          email: session.customer_details.email,
+          name: session.shipping_details.name, // Convert to currency
+        address: {
+            line1: customerDetails.address.line1,
+            city: customerDetails.address.city,
+            state: customerDetails.address.state,
+            postal_code: customerDetails.address.postal_code,
+            country: customerDetails.address.country,
+        }},
+        status: 'Completed',
+    });
+    console.log("Order saved:", newOrder);
+    
       res.status(200).json({
         shippingDetails: session.shipping_details,
         orderId: session.id,
+        items: purchasedItems 
       });
+     
     } catch (error) {
       console.error('Error fetching checkout session:', error);
       res.status(500).json({ error: error.message });
@@ -105,4 +143,14 @@ export const clearcartItem = async (req, res) => {
       res.status(500).json({ error: error.message });
     }
   };
+  export const getUserOrders = async (req, res) => {
+    try {
+        const userId = req.user.id; // Ensure user authentication to get the user's ID
+        const orders = await Order.find({ customer: userId }).populate('items.product');
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        res.status(500).json({ error: error.message });
+    }
+};
 
