@@ -6,7 +6,7 @@ import { viewPendingProducts, approveProduct, rejectProduct, getAllSellers,delet
 import {getAllCustomers,getCustomerById,deleteCustomer,activateCustomer} from './AdminCustomerController.js';
 
 import { getAllOrders,updateOrderStatus,deleteOrder} from './AdminOrderController.js';
-import {getAllProducts,getProductById,updateProduct,deleteProduct} from './AdminProductController.js';
+import {getAllProducts,getProductById,updateProduct,deleteProduct,getAllCategory,addCategory,getCategoryById} from './AdminProductController.js';
 
 
 
@@ -73,5 +73,11 @@ router.put('/products/:productId', authenticate,  updateProduct);
 
 // Route for admin to delete a product
 router.delete('/products/:productId', authenticate, deleteProduct);
+
+router.get('/category', authenticate,  getAllCategory);
+
+// Route for admin to get a product by ID
+router.get('/category/:categoryId',getCategoryById );
+router.post('/category', authenticate,addCategory);
 
 export default router;

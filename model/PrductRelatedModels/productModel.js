@@ -20,7 +20,7 @@ const productSchema = new mongoose.Schema({
   // Reference to the Category model
   category: 
      { type: String, required: true },
-  
+    
   seller: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Seller', // Assuming you have a Seller model

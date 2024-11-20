@@ -153,4 +153,17 @@ export const clearcartItem = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+export const clearOrder = async (req, res) => {
+  try {
+      const userId = req.user.id; // Get the authenticated user's ID
+      const result = await Order.deleteMany({ customer: userId }); // Delete all user's orders
+      console.log(`${result.deletedCount} orders deleted for user: ${userId}`);
+      
+      res.status(200).json({ message: 'Orders cleared successfully' });
+  } catch (error) {
+      console.error('Error clearing orders:', error);
+      res.status(500).json({ message: 'Error clearing orders', error: error.message });
+  }
+};
+
 
