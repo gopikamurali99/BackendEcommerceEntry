@@ -1,5 +1,5 @@
 import express from 'express'
-import { signup,signin,verifyEmail,signout } from './CustomerRouteController.js'
+import { signup,signin,verifyEmail,signout,getCustomerById } from './CustomerRouteController.js'
 import {addItemToCart,viewCart,updateCartItem,removeItemFromCart,clearCart} from './CartController.js';
 import {addItemToWishlist,viewWishlist,removeItemFromWishlist,clearWishlist} from './wishlistController.js';
 import {createOrder,getOrderById,cancelOrder,getCustomerOrders,userPaymentDetails} from './CustomerOrder.js';
@@ -16,6 +16,7 @@ router.post('/signup',signup)
 router.get('/verify/:token', verifyEmail);
 
 router.post('/login',signin)
+router.get('/profile/:customerId',CustomerAuthMiddleware,getCustomerById)
 
 router.post('/logout',signout)
 router.post('/cart', CustomerAuthMiddleware, addItemToCart);

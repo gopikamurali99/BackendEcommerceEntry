@@ -3,6 +3,7 @@ import { sendEmail } from '../../utils/email.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto'
+import mongoose from "mongoose";
 
 //sign-up 
 export const signup = async (req,res)=>{
@@ -73,7 +74,22 @@ export const signout = (req, res) => {
     res.cookie('token', '', { expires: new Date(0) });
     res.json({ message: 'Logged out successfully' });
 };
-  
+
+export const getCustomerById = async (req, res) => {
+    try {
+        const { customerId } = req.params; // Get customer ID from URL parameters
+        const customer = await Customer.findById(customerId);
+         // Fetch customer by ID
+         console.log('Received customerId:', customerId);
+        if (!customer) {
+            return res.status(404).json({ message: 'Customer not found' });
+        }
+
+        res.status(200).json({ customer, name: customer.Name });
+    } catch (error) {
+        res.status(500).json({ message: 'Error retrieving customer', error: error.message });
+    }
+};
 
 
     
