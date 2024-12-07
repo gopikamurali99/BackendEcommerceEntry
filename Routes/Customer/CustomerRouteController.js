@@ -13,7 +13,7 @@ export const signup = async (req,res)=>{
     const passwordRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     
     if(!passwordRegex.test(password)){
-        returnres.status(400).json({message:'Password must be atleast  8 characters long and include a number, a lowercase letter, an uppercase letter, and a special character.'})
+        return res.status(400).json({message:'Password must be atleast  8 characters long and include a number, a lowercase letter, an uppercase letter, and a special character.'})
     }
     const existingCustomer = await Customer.findOne({ email })
     if(existingCustomer){
