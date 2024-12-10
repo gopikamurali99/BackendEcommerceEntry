@@ -33,7 +33,7 @@ const itemSchema = new Schema({
 const userPaymentSchema = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
-        ref: 'Customer',  // Reference to the user model
+        ref: 'Customer',  
         required: true,
     },
     paymentIntentId: {
@@ -41,17 +41,17 @@ const userPaymentSchema = new Schema({
         required: true,
     },
     amount: {
-        type: Number,  // Amount charged (in cents for USD, etc.)
+        type: Number,  
         required: true,
     },
     currency: {
         type: String,
-        default: "inr",  // You can modify it if needed for other currencies
+        default: "inr",  
         required: true,
     },
     paymentMethod: {
         type: String,
-        enum: ["card"],  // Other payment methods if applicable
+        enum: ["card"], 
         default: "card",
         required: true,
     },
@@ -61,11 +61,11 @@ const userPaymentSchema = new Schema({
             'succeeded',
             'pending',
             'failed',
-            'requires_payment_method', // Add this line
-            'requires_confirmation',    // Add this line if needed
-            'requires_action',          // Add this line if needed
-            'processing',               // Add this line if needed
-            'canceled'                  // Add this line if needed
+            'requires_payment_method',
+            'requires_confirmation',   
+            'requires_action',          
+            'processing',               
+            'canceled'                  
         ],  // Payment status
         default: 'pending',
         required: true,

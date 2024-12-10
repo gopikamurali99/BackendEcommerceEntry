@@ -30,6 +30,7 @@ export const signup = async (req,res)=>{
      
     await sendEmail(email,'Emaile verfication',`Please verify your email by clicking the link: ${verificationLink}`)
     res.status(201).json({ message: 'Account created. Please verify your email.' });
+    console.log(newCustomer)
 };
  
 //email verification

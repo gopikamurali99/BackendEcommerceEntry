@@ -1,7 +1,7 @@
-// controllers/sellerProfileController.js
+
 import SellerProfile from '../../model/SellerRelatedModels/SellerProfileModel.js';
 
-// Add a new seller profile
+
 export const addSellerProfile = async (req, res) => {
     try {
         const newProfile = new SellerProfile(req.body);
@@ -12,7 +12,7 @@ export const addSellerProfile = async (req, res) => {
     }
 };
 
-// Get all seller profiles
+
 export const getAllSellerProfiles = async (req, res) => {
     try {
         const profiles = await SellerProfile.find();
@@ -22,7 +22,7 @@ export const getAllSellerProfiles = async (req, res) => {
     }
 };
 
-// Get a specific seller profile by ID
+
 export const getSellerProfileById = async (req, res) => {
     try {
         const profile = await SellerProfile.findById(req.params.id);
@@ -35,7 +35,7 @@ export const getSellerProfileById = async (req, res) => {
     }
 };
 
-// Update a seller profile
+
 export const updateSellerProfile = async (req, res) => {
     try {
         const profile = await SellerProfile.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -48,7 +48,7 @@ export const updateSellerProfile = async (req, res) => {
     }
 };
 
-// Delete a seller profile
+
 export const deleteSellerProfile = async (req, res) => {
     try {
         const profile = await SellerProfile.findByIdAndDelete(req.params.id);

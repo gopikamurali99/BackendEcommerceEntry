@@ -1,9 +1,9 @@
-// controllers/confirmOrderController.js
-import Product from '../../model/CustomerRelatedModels/confirmOrder.js'; // Import your Product model
-import ShippingAddress from '../../model/CustomerRelatedModels/ShippimgAddress.js'; // Import your ShippingAddress model
-import Payment from '../../model/CustomerRelatedModels/PaymentModel.js'; // Import your Payment model
 
-// Confirm an order
+import Product from '../../model/CustomerRelatedModels/confirmOrder.js'; 
+import ShippingAddress from '../../model/CustomerRelatedModels/ShippimgAddress.js'; 
+import Payment from '../../model/CustomerRelatedModels/PaymentModel.js'; 
+
+// to  Confirm an order
 export const confirmOrder = async (req, res) => {
     try {
         const { productIds, shippingAddressId, paymentId } = req.body; // Get product IDs, shipping address ID, and payment ID from the request body
@@ -26,7 +26,7 @@ export const confirmOrder = async (req, res) => {
             return res.status(404).json({ message: 'Payment not found' });
         }
 
-        // Prepare the order summary
+        // Preparing the order summary
         const orderSummary = {
             products,
             shippingAddress,

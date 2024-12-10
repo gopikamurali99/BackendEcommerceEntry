@@ -7,7 +7,7 @@ import productRoutes from './product/productRoute.js'
 
 const router = express.Router();
 
-// Use the admin and seller routes
+
 router.use('/admin', adminRoutes);
 router.use('/seller', sellerRoutes);
 router.use('/customer',customerRoutes);

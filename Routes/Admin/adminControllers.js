@@ -17,8 +17,8 @@ export const signup = async (req, res) => {
     }
 
     // Hash the password before saving
-    //const hashedPassword = await bcrypt.hash(password, 10); // 10 is the salt rounds
-   // const admin = new Admin({ Name, email, password: hashedPassword }); // Store the hashed password
+    //const hashedPassword = await bcrypt.hash(password, 10); 
+   // const admin = new Admin({ Name, email, password: hashedPassword }); 
     const admin = new Admin({ Name, email, password });
     const verificationToken = crypto.randomBytes(32).toString('hex')// Simple token generation
     console.log('Verification token generated:', verificationToken);
@@ -45,7 +45,7 @@ export const verifyEmail = async (req, res) => {
     }
     
     admin.verified = true;
-    admin.verificationToken = null; // Clear the token
+    admin.verificationToken = null; 
     await admin.save();
     res.json({ message: 'Email verified successfully' });
 };
@@ -71,8 +71,8 @@ export const login = async (req, res) => {
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     
     res.cookie('token', token, {
-        httpOnly: true, // Prevents JavaScript access to the cookie
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+        httpOnly: true, 
+        secure: process.env.NODE_ENV === 'production', 
         maxAge: 3600000, // Cookie expiration time (1 hour)
     });
     res.json({ message: 'Login successful', token });
@@ -80,7 +80,7 @@ export const login = async (req, res) => {
 
 // Admin logout
 export const logout = (req, res) => {
-    // Invalidate the token by removing it from the client side
+   
     res.cookie('token', '', { expires: new Date(0) });
     res.json({ message: 'Logged out successfully' });
 };

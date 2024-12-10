@@ -1,11 +1,11 @@
-// utils/email.js
+
 import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
-    service: 'gmail', // Use your email service
+    service: 'gmail', 
     auth: {
-        user: process.env.SUPER_ADMIN, // Your email
-        pass: process.env.SUPER_ADMIN_PASS, // Your email password
+        user: process.env.SUPER_ADMIN, 
+        pass: process.env.SUPER_ADMIN_PASS, 
     },secure: true,
 });
 

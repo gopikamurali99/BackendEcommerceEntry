@@ -1,4 +1,4 @@
-// controllers/adminCustomerController.js
+
 import Customer from '../../model/CustomerRelatedModels/CustomerModel.js'; // Import your Customer model
 
 // Get all customers
@@ -46,14 +46,14 @@ export const deleteCustomer = async (req, res) => {
 // Activate or deactivate a customer
 export const activateCustomer = async (req, res) => {
     try {
-        const { customerId } = req.params; // Get customer ID from URL parameters
+        const { customerId } = req.params; 
         const customer = await Customer.findById(customerId); // Find the customer
 
         if (!customer) {
             return res.status(404).json({ message: 'Customer not found' });
         }
 
-        // Toggle the isActive status
+        
         customer.isActive = !customer.isActive;
         await customer.save();
 

@@ -39,13 +39,13 @@ export const getOrderById = async (req, res) => {
     }
 };
 
-// Update the status of an order
+
 export const updateOrderStatus = async (req, res) => {
     try {
-        const { orderId } = req.params; // Get order ID from URL parameters
-        const { status } = req.body; // Get new status from request body
+        const { orderId } = req.params; 
+        const { status } = req.body; 
 
-        // Check if the status is valid (you can customize this)
+        
         const validStatuses = ['Pending', 'Shipped', 'Delivered', 'Cancelled'];
         if (!validStatuses.includes(status)) {
             return res.status(400).json({ message: 'Invalid status' });

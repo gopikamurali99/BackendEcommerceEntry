@@ -22,7 +22,7 @@ export const approveProduct = async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        // Update the product's approval status
+       
         productToApprove.approved = true;
         await productToApprove.save();
 
@@ -43,7 +43,7 @@ export const approveProduct = async (req, res) => {
             updatedAt: Date.now(),
         }); 
 
-        // Save the new product to the main product model
+       
         await newProduct.save();
 
         res.status(200).json({ message: 'Product approved successfully', product: newProduct });
@@ -52,7 +52,7 @@ export const approveProduct = async (req, res) => {
     }
 };
 
-// Function to reject a product
+
 export const rejectProduct = async (req, res) => {
     const { id } = req.params;
     try {
@@ -72,10 +72,10 @@ export const rejectProduct = async (req, res) => {
     }
 };
 
-// Get all sellers
+
 export const getAllSellers = async (req, res) => {
     try {
-        const sellers = await Seller.find(); // Fetch all sellers from the database
+        const sellers = await Seller.find(); 
         res.status(200).json(sellers);
     } catch (error) {
         res.status(500).json({ message: 'Error retrieving sellers', error: error.message });
@@ -85,8 +85,8 @@ export const getAllSellers = async (req, res) => {
 // Delete a seller
 export const deleteSeller = async (req, res) => {
     try {
-        const { sellerId } = req.params; // Get seller ID from URL parameters
-        const deletedSeller = await Seller.findByIdAndDelete(sellerId); // Delete the seller
+        const { sellerId } = req.params; 
+        const deletedSeller = await Seller.findByIdAndDelete(sellerId); 
 
         if (!deletedSeller) {
             return res.status(404).json({ message: 'Seller not found' });

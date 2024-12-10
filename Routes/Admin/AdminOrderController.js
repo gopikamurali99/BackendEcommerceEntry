@@ -4,7 +4,7 @@ import Order from '../../model/CustomerRelatedModels/OrderModel.js';
 
 
 
-// Get all orders (admin only)
+// Get all orders 
 export const getAllOrders = async (req, res) => {
     try {
         const orders = await Order.find().populate('customer', 'name email'); 
@@ -14,7 +14,7 @@ export const getAllOrders = async (req, res) => {
     }
 };
 
-// Update the status of an order (admin only)
+// Update the status of an order 
 export const updateOrderStatus = async (req, res) => {
     try {
         const { orderId } = req.params; 
@@ -32,7 +32,7 @@ export const updateOrderStatus = async (req, res) => {
     }
 };
 
-// Delete an order (admin only)
+// Delete an order
 export const deleteOrder = async (req, res) => {
     try {
         const { orderId } = req.params; 

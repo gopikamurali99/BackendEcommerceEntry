@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const wishlistSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Customer', // Reference to the Customer model
+        ref: 'Customer', 
         required: true,
     },
     items: [
@@ -29,7 +29,7 @@ const wishlistSchema = new mongoose.Schema({
     },
 });
 
-// Middleware to update the updatedAt field on save
+
 wishlistSchema.pre('save', function (next) {
     this.updatedAt = Date.now();
     next();
