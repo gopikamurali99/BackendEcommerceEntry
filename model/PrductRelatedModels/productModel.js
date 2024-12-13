@@ -23,7 +23,7 @@ const productSchema = new mongoose.Schema({
     
   seller: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Seller', // Assuming you have a Seller model
+    ref: 'Seller', 
     required: true,
   },
   brand: {

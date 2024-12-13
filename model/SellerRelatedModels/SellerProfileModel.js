@@ -2,11 +2,28 @@ import mongoose from "mongoose";
 
 const sellerProfileSchema = new mongoose.Schema({
     
-    address: {
-        type: String,
-        required:true,
-        trim: true
-    },
+    address:{
+        city:{
+            type: String,
+            required:true,
+            trim: true
+        },
+        district:{
+            type: String,
+            required:true,
+            trim: true
+        },
+        state:{
+            type: String,
+            required:true,
+            trim: true
+        },
+        pin:{
+            type: String,
+            required:true,
+            trim: true
+        },
+     } ,
     storeName: {
         type: String,
         required:true,
@@ -20,12 +37,7 @@ const sellerProfileSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product' // Reference to the Product model
     }],
-    rating: {
-        type: Number,
-        default: 0,
-        min: 0,
-        max: 5
-    },
+   
     bankAccount: {
         accountHolderName: {
             type: String,
@@ -48,20 +60,7 @@ const sellerProfileSchema = new mongoose.Schema({
             trim: true
         }
     },
-    gstDetails: {
-        gstin: {
-            type: String,
-            required:true,
-            
-            trim: true
-        },
-        pan: {
-            type: String,
-            required:true, 
-           
-            trim: true
-        }
-    },
+  
     createdAt: {
         type: Date,
         default: Date.now

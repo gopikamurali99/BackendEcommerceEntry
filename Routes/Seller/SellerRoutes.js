@@ -48,7 +48,7 @@ router.get('/sellerorders/:orderId', authenticate,  getOrderById);
 
 router.put('/sellerorders/:orderId/status', authenticate, updateOrderStatus);
 
-router.post('/profile', addSellerProfile);
+router.post('/profile',authenticate, addSellerProfile);
 
 
 router.get('/', getAllSellerProfiles);
@@ -56,9 +56,9 @@ router.get('/', getAllSellerProfiles);
 router.get('/:id', getSellerProfileById);
 
 
-router.put('/profile/:id', updateSellerProfile);
+router.put('/profile/:id',authenticate, updateSellerProfile);
 
 
-router.delete('/profile/:id', deleteSellerProfile);
+router.delete('/profile/:id',authenticate, deleteSellerProfile);
 
 export default router;

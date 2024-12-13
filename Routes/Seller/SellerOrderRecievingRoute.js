@@ -1,15 +1,15 @@
-// controllers/sellerOrderController.js
+
 import Order from '../../model/CustomerRelatedModels/OrderModel.js'; // Import your Order model
 
-// Get all orders for the authenticated seller
+
 export const getSellerOrders = async (req, res) => {
     try {
-        const sellerId = req.user.id; // Get the authenticated seller's ID
+        const sellerId = req.user.id; 
 
-        // Find orders that contain products from the seller
+        
         const orders = await Order.find({ 'items.product': { $in: sellerId } }) // Assuming items.product is an array of product IDs
-            .populate('items.product') // Populate product details
-            .populate('customer', 'name email'); // Populate customer details
+            .populate('items.product') 
+            .populate('customer', 'name email'); 
 
         if (!orders || orders.length === 0) {
             return res.status(404).json({ message: 'No orders found for this seller' });
@@ -21,13 +21,13 @@ export const getSellerOrders = async (req, res) => {
     }
 };
 
-// Get a specific order by ID
+
 export const getOrderById = async (req, res) => {
     try {
-        const { orderId } = req.params; // Get order ID from URL parameters
+        const { orderId } = req.params; 
         const order = await Order.findById(orderId)
-            .populate('items.product') // Populate product details
-            .populate('customer', 'name email'); // Populate customer details
+            .populate('items.product') 
+            .populate('customer', 'name email'); 
 
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });

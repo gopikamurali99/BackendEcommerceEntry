@@ -30,7 +30,7 @@ app.use(cors({
 
 
 
-connectionString()  // connecting with mongodb
+connectionString()  
 
 app.use(express.json());
 app.use(cookieParser())
