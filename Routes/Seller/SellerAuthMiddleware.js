@@ -5,6 +5,7 @@ export const authenticate = (req, res, next) => {
     const token = req.header('Authorization')?.split(' ')[1];
      // Extract token from the Authorization header
      console.log('Received Token:', token); 
+     
     if (!token) return res.status(401).json({ message: 'Access denied. No token provided.' });
 
     try {

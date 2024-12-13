@@ -67,6 +67,7 @@ export const signin = async (req, res) => {
         maxAge: 3600000, // Cookie expiration time (1 hour)
     });
     res.json({ token });
+    res.json({ token, userId:seller._id });
 };
 
 // Sign-out
